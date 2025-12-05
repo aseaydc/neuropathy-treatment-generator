@@ -1,0 +1,2417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seay Wellness Neuropathy Assessment & Treatment Plan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #04387C;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #04387C;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .patient-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .insurance-toggle-section {
+            background: #e3f2fd;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #4caf50;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .toggle-label {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #04387C;
+        }
+        
+        .insurance-inputs {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .insurance-inputs.active {
+            display: grid;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #04387C;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #04387C;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #04387C;
+        }
+        
+        .section h2 {
+            color: #04387C;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h3 {
+            color: #333;
+            margin: 20px 0 15px 0;
+            font-size: 1.3em;
+        }
+        
+        .test-group {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .test-row {
+            display: grid;
+            grid-template-columns: 200px repeat(3, 1fr);
+            gap: 15px;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .test-row label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .test-input {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .test-input span {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .test-input input,
+        .test-input select {
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .normal-value {
+            background: #e8f5e9;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        
+        .digit-test-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 10px 0;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .supplement-card {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: all 0.3s;
+        }
+        
+        .supplement-card:hover {
+            border-color: #04387C;
+            box-shadow: 0 5px 15px rgba(4, 56, 124, 0.1);
+        }
+        
+        .supplement-card h4 {
+            color: #04387C;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .dosing-info {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .treatment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .treatment-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        
+        .treatment-card h4 {
+            color: #04387C;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .price-tag {
+            background: #4caf50;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .covered-tag {
+            background: #2196f3;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            display: inline-block;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .frequency {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        
+        .recommendation-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .recommendation-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            background: #04387C;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            background: #02254a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(4, 56, 124, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+        
+        .notes-area {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            .action-buttons,
+            .btn {
+                display: none;
+            }
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: #04387C;
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .cost-summary {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 2px solid #4caf50;
+        }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cost-total {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #04387C;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 3px solid #04387C;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 Neuropathy Assessment & Treatment Plan</h1>
+            <p>Seay Wellness - Comprehensive Peripheral Neuropathy Evaluation</p>
+            <p style="font-size: 0.9em; color: #666;">503 US-70 East, Suite L, Garner, NC 27529</p>
+        </div>
+
+        <!-- Patient Information -->
+        <div class="patient-info">
+            <div class="form-group">
+                <label>Patient Name:</label>
+                <input type="text" id="patientName" placeholder="Enter patient name">
+            </div>
+            <div class="form-group">
+                <label>Date:</label>
+                <input type="date" id="examDate">
+            </div>
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="number" id="patientAge" placeholder="Age">
+            </div>
+            <div class="form-group">
+                <label>Chief Complaint:</label>
+                <input type="text" id="chiefComplaint" placeholder="Primary symptoms">
+            </div>
+        </div>
+
+        <!-- INSURANCE/MEDICARE TOGGLE SECTION -->
+        <div class="insurance-toggle-section">
+            <div class="toggle-container">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="insuranceToggle" onchange="toggleInsurance()">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">Insurance/Medicare Coverage</span>
+            </div>
+            
+            <div id="insuranceInputs" class="insurance-inputs">
+                <div class="form-group">
+                    <label>Insurance Type:</label>
+                    <select id="insuranceType">
+                        <option value="medicare">Medicare</option>
+                        <option value="private">Private Insurance</option>
+                        <option value="medicaid">Medicaid</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Chiropractic Adjustments Covered:</label>
+                    <input type="number" id="adjustmentsCovered" min="0" placeholder="Number of visits covered">
+                </div>
+                
+                <div class="form-group">
+                    <label>Dry Needling Covered:</label>
+                    <select id="dryNeedlingCovered">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                        <option value="partial">Partial Coverage</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>If Dry Needling Covered, # Visits:</label>
+                    <input type="number" id="dryNeedlingVisits" min="0" placeholder="Number covered">
+                </div>
+                
+                <div class="form-group">
+                    <label>Other Covered Services:</label>
+                    <textarea id="otherCoveredServices" rows="3" placeholder="List any other covered modalities..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Copay Amount:</label>
+                    <input type="number" id="copayAmount" min="0" step="0.01" placeholder="$ per visit">
+                </div>
+                
+                <div class="form-group">
+                    <label>Deductible Status:</label>
+                    <select id="deductibleStatus">
+                        <option value="met">Deductible Met</option>
+                        <option value="notmet">Deductible Not Met</option>
+                        <option value="na">N/A</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Notes on Coverage:</label>
+                    <textarea id="insuranceNotes" rows="3" placeholder="Additional insurance details, limitations, etc..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 1: LARGE DIAMETER AFFERENT TESTING -->
+        <div class="section">
+            <h2>🎵 Large Diameter Afferent Testing - Vibration Sense</h2>
+            <div class="info-box">
+                <strong>Test Protocol:</strong> Using 128 Hz tuning fork. Strike tuning fork and place on bony prominence. Ask patient to report when vibration stops. Grade 1-10 based on duration of perception (10 = full normal vibration sense).
+                <br><strong>Grading Scale:</strong> 8-10 = Normal | 6-7 = Mild Deficit | 3-5 = Moderate Deficit | 0-2 = Severe Deficit
+            </div>
+            
+            <div class="test-group">
+                <h3>Vibration Testing Results</h3>
+                <div class="test-row">
+                    <label>Right Shoulder:</label>
+                    <div class="test-input">
+                        <span>Patient Score (1-10)</span>
+                        <input type="number" id="rightShoulder" min="0" max="10">
+                    </div>
+                    <div class="normal-value">Normal: 10/10</div>
+                    <div class="test-input">
+                        <span>Notes</span>
+                        <input type="text" id="rightShoulderNotes" placeholder="Additional observations">
+                    </div>
+                </div>
+                
+                <div class="test-row">
+                    <label>Left Shoulder:</label>
+                    <div class="test-input">
+                        <span>Patient Score (1-10)</span>
+                        <input type="number" id="leftShoulder" min="0" max="10">
+                    </div>
+                    <div class="normal-value">Normal: 10/10</div>
+                    <div class="test-input">
+                        <span>Notes</span>
+                        <input type="text" id="leftShoulderNotes" placeholder="Additional observations">
+                    </div>
+                </div>
+                
+                <div class="test-row">
+                    <label>Right Thumb (1st MCP):</label>
+                    <div class="test-input">
+                        <span>Patient Score (1-10)</span>
+                        <input type="number" id="rightThumb" min="0" max="10">
+                    </div>
+                    <div class="normal-value">Normal: 12/10 (Enhanced)</div>
+                    <div class="test-input">
+                        <span>Notes</span>
+                        <input type="text" id="rightThumbNotes" placeholder="Additional observations">
+                    </div>
+                </div>
+                
+                <div class="test-row">
+                    <label>Left Thumb (1st MCP):</label>
+                    <div class="test-input">
+                        <span>Patient Score (1-10)</span>
+                        <input type="number" id="leftThumb" min="0" max="10">
+                    </div>
+                    <div class="normal-value">Normal: 12/10 (Enhanced)</div>
+                    <div class="test-input">
+                        <span>Notes</span>
+                        <input type="text" id="leftThumbNotes" placeholder="Additional observations">
+                    </div>
+                </div>
+                
+                <div class="test-row">
+                    <label>Right Big Toe (1st MTP):</label>
+                    <div class="test-input">
+                        <span>Patient Score (1-10)</span>
+                        <input type="number" id="rightToe" min="0" max="10">
+                    </div>
+                    <div class="normal-value">Normal: 10/10</div>
+                    <div class="test-input">
+                        <span>Notes</span>
+                        <input type="text" id="rightToeNotes" placeholder="Additional observations">
+                    </div>
+                </div>
+                
+                <div class="test-row">
+                    <label>Left Big Toe (1st MTP):</label>
+                    <div class="test-input">
+                        <span>Patient Score (1-10)</span>
+                        <input type="number" id="leftToe" min="0" max="10">
+                    </div>
+                    <div class="normal-value">Normal: 10/10</div>
+                    <div class="test-input">
+                        <span>Notes</span>
+                        <input type="text" id="leftToeNotes" placeholder="Additional observations">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: DIGIT SPAN TEST -->
+        <div class="section">
+            <h2>✋ Digit Span Test (Eyes Closed)</h2>
+            <div class="warning-box">
+                <strong>Important:</strong> All digit span tests must be performed with patient's eyes closed to eliminate visual compensation. Test light touch discrimination, sustained hold awareness, and digit identification.
+                <br><strong>Severity Assessment:</strong> If a limb fails ALL THREE tests (incorrect/unable on span & hold, plus 0-2/5 on digit ID), this indicates SEVERE sensory deficit.
+            </div>
+            
+            <div class="digit-test-grid">
+                <!-- HANDS -->
+                <div class="test-group">
+                    <h3>Hands Testing</h3>
+                    
+                    <h4 style="color: #04387C; margin-top: 15px;">Light Touch - Span Identification</h4>
+                    <p style="font-size: 0.9em; color: #666;">Touch two fingers. Patient reports how many fingers between the touches.</p>
+                    <div class="form-group">
+                        <label>Right Hand:</label>
+                        <select id="rightHandSpan">
+                            <option value="">Select result</option>
+                            <option value="correct">Correct Identification</option>
+                            <option value="incorrect">Incorrect Identification</option>
+                            <option value="unable">Unable to Identify</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Left Hand:</label>
+                        <select id="leftHandSpan">
+                            <option value="">Select result</option>
+                            <option value="correct">Correct Identification</option>
+                            <option value="incorrect">Incorrect Identification</option>
+                            <option value="unable">Unable to Identify</option>
+                        </select>
+                    </div>
+                    
+                    <h4 style="color: #04387C; margin-top: 15px;">Sustained Hold Test</h4>
+                    <p style="font-size: 0.9em; color: #666;">Hold finger without lifting. Patient maintains awareness of contact.</p>
+                    <div class="form-group">
+                        <label>Right Hand:</label>
+                        <select id="rightHandHold">
+                            <option value="">Select result</option>
+                            <option value="correct">Correct - Maintained Awareness</option>
+                            <option value="incorrect">Incorrect - Lost Awareness</option>
+                            <option value="unable">Unable to Maintain Awareness</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Left Hand:</label>
+                        <select id="leftHandHold">
+                            <option value="">Select result</option>
+                            <option value="correct">Correct - Maintained Awareness</option>
+                            <option value="incorrect">Incorrect - Lost Awareness</option>
+                            <option value="unable">Unable to Maintain Awareness</option>
+                        </select>
+                    </div>
+                    
+                    <h4 style="color: #04387C; margin-top: 15px;">Digit Numbering Test</h4>
+                    <p style="font-size: 0.9em; color: #666;">Hold specific digit. Patient identifies which number (1-5).</p>
+                    <div class="form-group">
+                        <label>Right Hand:</label>
+                        <select id="rightHandNumber">
+                            <option value="">Select result</option>
+                            <option value="5/5">5/5 Correct</option>
+                            <option value="4/5">4/5 Correct</option>
+                            <option value="3/5">3/5 Correct</option>
+                            <option value="2/5">2/5 Correct</option>
+                            <option value="1/5">1/5 Correct</option>
+                            <option value="0/5">0/5 Correct</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Left Hand:</label>
+                        <select id="leftHandNumber">
+                            <option value="">Select result</option>
+                            <option value="5/5">5/5 Correct</option>
+                            <option value="4/5">4/5 Correct</option>
+                            <option value="3/5">3/5 Correct</option>
+                            <option value="2/5">2/5 Correct</option>
+                            <option value="1/5">1/5 Correct</option>
+                            <option value="0/5">0/5 Correct</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- FEET -->
+                <div class="test-group">
+                    <h3>Feet Testing</h3>
+                    
+                    <h4 style="color: #04387C; margin-top: 15px;">Light Touch - Span Identification</h4>
+                    <p style="font-size: 0.9em; color: #666;">Touch two toes. Patient reports how many toes between the touches.</p>
+                    <div class="form-group">
+                        <label>Right Foot:</label>
+                        <select id="rightFootSpan">
+                            <option value="">Select result</option>
+                            <option value="correct">Correct Identification</option>
+                            <option value="incorrect">Incorrect Identification</option>
+                            <option value="unable">Unable to Identify</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Left Foot:</label>
+                        <select id="leftFootSpan">
+                            <option value="">Select result</option>
+                            <option value="correct">Correct Identification</option>
+                            <option value="incorrect">Incorrect Identification</option>
+                            <option value="unable">Unable to Identify</option>
+                        </select>
+                    </div>
+                    
+                    <h4 style="color: #04387C; margin-top: 15px;">Sustained Hold Test</h4>
+                    <p style="font-size: 0.9em; color: #666;">Hold toe without lifting. Patient maintains awareness of contact.</p>
+                    <div class="form-group">
+                        <label>Right Foot:</label>
+                        <select id="rightFootHold">
+                            <option value="">Select result</option>
+                            <option value="correct">Correct - Maintained Awareness</option>
+                            <option value="incorrect">Incorrect - Lost Awareness</option>
+                            <option value="unable">Unable to Maintain Awareness</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Left Foot:</label>
+                        <select id="leftFootHold">
+                            <option value="">Select result</option>
+                            <option value="correct">Correct - Maintained Awareness</option>
+                            <option value="incorrect">Incorrect - Lost Awareness</option>
+                            <option value="unable">Unable to Maintain Awareness</option>
+                        </select>
+                    </div>
+                    
+                    <h4 style="color: #04387C; margin-top: 15px;">Toe Numbering Test</h4>
+                    <p style="font-size: 0.9em; color: #666;">Hold specific toe. Patient identifies which number (1-5).</p>
+                    <div class="form-group">
+                        <label>Right Foot:</label>
+                        <select id="rightFootNumber">
+                            <option value="">Select result</option>
+                            <option value="5/5">5/5 Correct</option>
+                            <option value="4/5">4/5 Correct</option>
+                            <option value="3/5">3/5 Correct</option>
+                            <option value="2/5">2/5 Correct</option>
+                            <option value="1/5">1/5 Correct</option>
+                            <option value="0/5">0/5 Correct</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Left Foot:</label>
+                        <select id="leftFootNumber">
+                            <option value="">Select result</option>
+                            <option value="5/5">5/5 Correct</option>
+                            <option value="4/5">4/5 Correct</option>
+                            <option value="3/5">3/5 Correct</option>
+                            <option value="2/5">2/5 Correct</option>
+                            <option value="1/5">1/5 Correct</option>
+                            <option value="0/5">0/5 Correct</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: TEMPERATURE ASSESSMENT -->
+        <div class="section">
+            <h2>🌡️ Infrared Temperature Assessment</h2>
+            <div class="info-box">
+                <strong>Test Protocol:</strong> Use infrared thermometer to measure skin temperature bilaterally. Test dorsum of hands and feet. <strong>Temperature differential >1.5°F between sides indicates autonomic dysfunction and small fiber neuropathy.</strong>
+            </div>
+            
+            <div class="test-group">
+                <h3>Hand Temperature (Dorsum)</h3>
+                <div class="test-row">
+                    <label>Right Hand:</label>
+                    <div class="test-input">
+                        <span>Temperature (°F)</span>
+                        <input type="number" id="rightHandTemp" step="0.1" placeholder="°F">
+                    </div>
+                    <div class="test-input">
+                        <span>Left Hand:</span>
+                        <input type="number" id="leftHandTemp" step="0.1" placeholder="°F">
+                    </div>
+                    <div class="test-input">
+                        <span>Differential</span>
+                        <input type="text" id="handTempDiff" readonly style="background: #f0f0f0; font-weight: bold;">
+                    </div>
+                </div>
+                <div id="handTempStatus" style="margin-top: 10px; padding: 10px; border-radius: 5px; display: none;">
+                    <strong>Status: </strong><span id="handTempStatusText"></span>
+                </div>
+            </div>
+            
+            <div class="test-group">
+                <h3>Foot Temperature (Dorsum)</h3>
+                <div class="test-row">
+                    <label>Right Foot:</label>
+                    <div class="test-input">
+                        <span>Temperature (°F)</span>
+                        <input type="number" id="rightFootTemp" step="0.1" placeholder="°F">
+                    </div>
+                    <div class="test-input">
+                        <span>Left Foot:</span>
+                        <input type="number" id="leftFootTemp" step="0.1" placeholder="°F">
+                    </div>
+                    <div class="test-input">
+                        <span>Differential</span>
+                        <input type="text" id="footTempDiff" readonly style="background: #f0f0f0; font-weight: bold;">
+                    </div>
+                </div>
+                <div id="footTempStatus" style="margin-top: 10px; padding: 10px; border-radius: 5px; display: none;">
+                    <strong>Status: </strong><span id="footTempStatusText"></span>
+                </div>
+            </div>
+            
+            <div class="warning-box" id="tempWarning" style="display: none;">
+                <strong>⚠️ AUTONOMIC DYSFUNCTION DETECTED:</strong>
+                <p id="tempWarningText" style="margin-top: 10px;"></p>
+            </div>
+        </div>
+
+        <!-- SECTION 4: ADDITIONAL NEUROLOGICAL TESTS -->
+        <div class="section">
+            <h2>🔍 Additional Neurological Assessment</h2>
+            
+            <div class="test-group">
+                <h3>Two-Point Discrimination</h3>
+                <div class="info-box">
+                    <strong>Normal Values:</strong> Fingertips: 2-3mm | Palms: 8-12mm | Dorsal hands: 20-30mm | Feet: 3-8mm
+                </div>
+                <div class="test-row">
+                    <label>Fingertips:</label>
+                    <div class="test-input">
+                        <span>Right (mm)</span>
+                        <input type="number" id="rightFingertip2pt" placeholder="mm">
+                    </div>
+                    <div class="test-input">
+                        <span>Left (mm)</span>
+                        <input type="number" id="leftFingertip2pt" placeholder="mm">
+                    </div>
+                    <div class="test-input">
+                        <span>Status</span>
+                        <select id="fingertip2ptStatus">
+                            <option value="normal">Normal</option>
+                            <option value="impaired">Impaired</option>
+                            <option value="severe">Severe Deficit</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="test-row">
+                    <label>Toes:</label>
+                    <div class="test-input">
+                        <span>Right (mm)</span>
+                        <input type="number" id="rightToe2pt" placeholder="mm">
+                    </div>
+                    <div class="test-input">
+                        <span>Left (mm)</span>
+                        <input type="number" id="leftToe2pt" placeholder="mm">
+                    </div>
+                    <div class="test-input">
+                        <span>Status</span>
+                        <select id="toe2ptStatus">
+                            <option value="normal">Normal</option>
+                            <option value="impaired">Impaired</option>
+                            <option value="severe">Severe Deficit</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-group">
+                <h3>Ankle Reflex Testing (Achilles)</h3>
+                <div class="test-row">
+                    <label>Right Ankle:</label>
+                    <div class="test-input">
+                        <span>Reflex Response</span>
+                        <select id="rightAnkleReflex">
+                            <option value="">Select</option>
+                            <option value="2+">2+ Normal</option>
+                            <option value="1+">1+ Diminished</option>
+                            <option value="0">0 Absent</option>
+                            <option value="3+">3+ Brisk</option>
+                            <option value="4+">4+ Hyperactive</option>
+                        </select>
+                    </div>
+                    <div class="test-input">
+                        <span>Notes</span>
+                        <input type="text" id="rightAnkleNotes" placeholder="Additional findings">
+                    </div>
+                </div>
+                <div class="test-row">
+                    <label>Left Ankle:</label>
+                    <div class="test-input">
+                        <span>Reflex Response</span>
+                        <select id="leftAnkleReflex">
+                            <option value="">Select</option>
+                            <option value="2+">2+ Normal</option>
+                            <option value="1+">1+ Diminished</option>
+                            <option value="0">0 Absent</option>
+                            <option value="3+">3+ Brisk</option>
+                            <option value="4+">4+ Hyperactive</option>
+                        </select>
+                    </div>
+                    <div class="test-input">
+                        <span>Notes</span>
+                        <input type="text" id="leftAnkleNotes" placeholder="Additional findings">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-group">
+                <h3>Balance & Proprioception</h3>
+                <div class="test-row">
+                    <label>Romberg Test:</label>
+                    <div class="test-input">
+                        <span>Eyes Open</span>
+                        <select id="rombergOpen">
+                            <option value="stable">Stable</option>
+                            <option value="mildSway">Mild Sway</option>
+                            <option value="unstable">Unstable</option>
+                        </select>
+                    </div>
+                    <div class="test-input">
+                        <span>Eyes Closed</span>
+                        <select id="rombergClosed">
+                            <option value="stable">Stable</option>
+                            <option value="mildSway">Mild Sway</option>
+                            <option value="unstable">Unstable</option>
+                            <option value="falling">Near Fall</option>
+                        </select>
+                    </div>
+                    <div class="test-input">
+                        <span>Duration (seconds)</span>
+                        <input type="number" id="rombergDuration" placeholder="Seconds">
+                    </div>
+                </div>
+                <div class="test-row">
+                    <label>Single Leg Stance:</label>
+                    <div class="test-input">
+                        <span>Right Leg (sec)</span>
+                        <input type="number" id="rightLegStance" placeholder="Seconds">
+                    </div>
+                    <div class="test-input">
+                        <span>Left Leg (sec)</span>
+                        <input type="number" id="leftLegStance" placeholder="Seconds">
+                    </div>
+                    <div class="test-input">
+                        <span>Status</span>
+                        <select id="stanceStatus">
+                            <option value="normal">Normal (>10s)</option>
+                            <option value="reduced">Reduced (5-10s)</option>
+                            <option value="impaired">Impaired (<5s)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-group">
+                <h3>Skin & Autonomic Signs</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="skinDry">
+                        <label for="skinDry">Dry, flaking skin</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="skinShiny">
+                        <label for="skinShiny">Shiny, atrophic skin</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hairLoss">
+                        <label for="hairLoss">Hair loss on extremities</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="colorChanges">
+                        <label for="colorChanges">Color changes (pallor/rubor)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="edema">
+                        <label for="edema">Edema present</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="calluses">
+                        <label for="calluses">Abnormal callus formation</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 5: SYMPTOM ASSESSMENT -->
+        <div class="section">
+            <h2>📋 Symptom Severity Assessment</h2>
+            
+            <div class="test-group">
+                <h3>Neuropathic Symptoms</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Symptom</th>
+                            <th>Severity (0-10)</th>
+                            <th>Frequency</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Burning pain</td>
+                            <td><input type="number" id="burningPain" min="0" max="10" style="width: 60px;"></td>
+                            <td>
+                                <select id="burningFreq">
+                                    <option value="constant">Constant</option>
+                                    <option value="frequent">Frequent</option>
+                                    <option value="occasional">Occasional</option>
+                                    <option value="rare">Rare</option>
+                                </select>
+                            </td>
+                            <td><input type="text" id="burningLocation"></td>
+                        </tr>
+                        <tr>
+                            <td>Tingling/Pins & Needles</td>
+                            <td><input type="number" id="tingling" min="0" max="10" style="width: 60px;"></td>
+                            <td>
+                                <select id="tinglingFreq">
+                                    <option value="constant">Constant</option>
+                                    <option value="frequent">Frequent</option>
+                                    <option value="occasional">Occasional</option>
+                                    <option value="rare">Rare</option>
+                                </select>
+                            </td>
+                            <td><input type="text" id="tinglingLocation"></td>
+                        </tr>
+                        <tr>
+                            <td>Numbness</td>
+                            <td><input type="number" id="numbness" min="0" max="10" style="width: 60px;"></td>
+                            <td>
+                                <select id="numbnessFreq">
+                                    <option value="constant">Constant</option>
+                                    <option value="frequent">Frequent</option>
+                                    <option value="occasional">Occasional</option>
+                                    <option value="rare">Rare</option>
+                                </select>
+                            </td>
+                            <td><input type="text" id="numbnessLocation"></td>
+                        </tr>
+                        <tr>
+                            <td>Electric shock sensations</td>
+                            <td><input type="number" id="shockPain" min="0" max="10" style="width: 60px;"></td>
+                            <td>
+                                <select id="shockFreq">
+                                    <option value="constant">Constant</option>
+                                    <option value="frequent">Frequent</option>
+                                    <option value="occasional">Occasional</option>
+                                    <option value="rare">Rare</option>
+                                </select>
+                            </td>
+                            <td><input type="text" id="shockLocation"></td>
+                        </tr>
+                        <tr>
+                            <td>Weakness</td>
+                            <td><input type="number" id="weakness" min="0" max="10" style="width: 60px;"></td>
+                            <td>
+                                <select id="weaknessFreq">
+                                    <option value="constant">Constant</option>
+                                    <option value="frequent">Frequent</option>
+                                    <option value="occasional">Occasional</option>
+                                    <option value="rare">Rare</option>
+                                </select>
+                            </td>
+                            <td><input type="text" id="weaknessLocation"></td>
+                        </tr>
+                        <tr>
+                            <td>Balance problems</td>
+                            <td><input type="number" id="balance" min="0" max="10" style="width: 60px;"></td>
+                            <td>
+                                <select id="balanceFreq">
+                                    <option value="constant">Constant</option>
+                                    <option value="frequent">Frequent</option>
+                                    <option value="occasional">Occasional</option>
+                                    <option value="rare">Rare</option>
+                                </select>
+                            </td>
+                            <td><input type="text" id="balanceLocation"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 6: PHYSICA ENERGETICS SUPPLEMENT PROTOCOL -->
+        <div class="section">
+            <h2>💊 Physica Energetics Supplement Protocol</h2>
+            <div class="info-box">
+                <strong>Note:</strong> Supplements are sold at standard retail pricing and billed separately from treatment services.
+            </div>
+            
+            <div class="supplement-card">
+                <h4>GB-40 Yuan Source - PRIMARY RECOMMENDATION</h4>
+                <p><strong>Retail Price:</strong> $41.28 | <strong>With Tax:</strong> $44.27 per bottle (60 caps)</p>
+                <p><strong>Purpose:</strong> Pancreatic enzyme support, blood sugar regulation, nerve metabolism support</p>
+                <p><strong>Key Indications for Neuropathy:</strong> Supports enzyme function critical for nerve health, assists blood sugar balance (major neuropathy factor), supports metabolic pathways</p>
+                
+                <div class="dosing-info">
+                    <strong>DOSING PROTOCOL:</strong>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li><strong>General/Prophylaxis:</strong> 2 capsules daily</li>
+                        <li><strong>Mild to Moderate Neuropathy:</strong> 2 capsules 2x daily (~$88/month)</li>
+                        <li><strong>Severe/Advanced Neuropathy:</strong> 3-4 capsules 2x daily (~$133-177/month)</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><em>Take 30 minutes before meals or 1 hour after eating</em></p>
+                </div>
+                
+                <div class="checkbox-item" style="margin-top: 15px;">
+                    <input type="checkbox" id="gb40Recommended">
+                    <label for="gb40Recommended"><strong>Include GB-40 Yuan Source in protocol</strong></label>
+                </div>
+            </div>
+            
+            <div class="supplement-card">
+                <h4>Methyl-B12 Liposome Spray</h4>
+                <p><strong>Retail Price:</strong> $49.34 | <strong>With Tax:</strong> $52.92 per bottle (2 oz) | <strong>~$53/month</strong></p>
+                <p><strong>Purpose:</strong> Essential for nerve regeneration and myelin sheath repair. Methylated form for superior absorption.</p>
+                <div class="dosing-info">
+                    <strong>DOSING:</strong> 2 sprays under tongue 2x daily (hold 30 seconds before swallowing)
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="b12Recommended">
+                    <label for="b12Recommended"><strong>Include Methyl-B12 in protocol</strong></label>
+                </div>
+            </div>
+            
+            <div class="supplement-card">
+                <h4>Acetyl L-Carnitine</h4>
+                <p><strong>Retail Price:</strong> $42.24 | <strong>With Tax:</strong> $45.30 per bottle (90 caps)</p>
+                <p><strong>Monthly Cost:</strong> General ~$68 | Chronic ~$91</p>
+                <p><strong>Purpose:</strong> Supports mitochondrial function, nerve pain reduction, cognitive support. Promotes acetylcholine biosynthesis.</p>
+                <div class="dosing-info">
+                    <strong>DOSING:</strong>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li><strong>General:</strong> 2 capsules 2x daily (1.5 bottles/month)</li>
+                        <li><strong>Acute Neuropathy:</strong> 3 capsules 3x daily (3 bottles/month)</li>
+                        <li><strong>Chronic Neuropathy:</strong> 3 capsules 2x daily (2 bottles/month)</li>
+                    </ul>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="alcarRecommended">
+                    <label for="alcarRecommended"><strong>Include Acetyl L-Carnitine in protocol</strong></label>
+                </div>
+            </div>
+            
+            <div class="supplement-card">
+                <h4>NAC Forte (N-Acetyl L-Cysteine)</h4>
+                <p><strong>Retail Price:</strong> $41.82 | <strong>With Tax:</strong> $44.85 per bottle (90 caps)</p>
+                <p><strong>Monthly Cost:</strong> ~$67-90 (depending on dosing)</p>
+                <p><strong>Purpose:</strong> Powerful antioxidant, supports glutathione production, reduces oxidative stress in nerves.</p>
+                <div class="dosing-info">
+                    <strong>DOSING:</strong> 2 capsules 2-3x daily (1.5-2 bottles/month)
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="nacRecommended">
+                    <label for="nacRecommended"><strong>Include NAC Forte in protocol</strong></label>
+                </div>
+            </div>
+            
+            <div class="supplement-card">
+                <h4>Glycine Composite</h4>
+                <p><strong>Retail Price:</strong> $42.24 | <strong>With Tax:</strong> $45.30 per container | <strong>~$45-90/month</strong></p>
+                <p><strong>Purpose:</strong> Inhibitory neurotransmitter support, nerve protection, supports collagen formation for nerve structures.</p>
+                <div class="dosing-info">
+                    <strong>DOSING:</strong> 1 scoop 1-2x daily in water
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="glycineRecommended">
+                    <label for="glycineRecommended"><strong>Include Glycine Composite in protocol</strong></label>
+                </div>
+            </div>
+            
+            <div class="supplement-card">
+                <h4>Magnesium BisGlycinate + L-Taurine</h4>
+                <p><strong>Retail Price:</strong> $45.22 | <strong>With Tax:</strong> $48.50 per bottle (90 caps) | <strong>~$49/month</strong></p>
+                <p><strong>Purpose:</strong> Nerve conduction support, muscle relaxation, reduces nerve excitability and pain.</p>
+                <div class="dosing-info">
+                    <strong>DOSING:</strong> 2 capsules before bed (may increase to 2 capsules 2x daily)
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="magRecommended">
+                    <label for="magRecommended"><strong>Include Magnesium in protocol</strong></label>
+                </div>
+            </div>
+            
+            <div class="supplement-card">
+                <h4>Lymph Drainage Series (BioToxicosis Support)</h4>
+                <p><strong>Retail Price:</strong> $34.00 | <strong>With Tax:</strong> $36.47 per bottle (2 oz) | <strong>~$36/month</strong></p>
+                <p><strong>Purpose:</strong> Essential ECM drainage to clear toxic metabolites affecting nerve function.</p>
+                <div class="dosing-info">
+                    <strong>PROTOCOL:</strong>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li><strong>Lymph 1 Acute:</strong> For acute inflammation
+                            <ul style="padding-left: 20px;">
+                                <li>General: 1 full dropper 2x daily in warm water</li>
+                                <li>Acute: 2 full droppers 6x daily in warm water (3-5 days)</li>
+                                <li>Chronic: 2 full droppers 2x daily in warm water</li>
+                            </ul>
+                        </li>
+                        <li><strong>Lymph 2 Matrix:</strong> For deeper ECM congestion
+                            <ul style="padding-left: 20px;">
+                                <li>General: 1 full dropper 2x daily in warm water</li>
+                                <li>Acute: 2 full droppers 6x daily in warm water (3-5 days)</li>
+                                <li>Chronic: 2 full droppers 2x daily in warm water</li>
+                            </ul>
+                        </li>
+                        <li><strong>Lymph 3 Chronic:</strong> For chronic/deep longstanding conditions
+                            <ul style="padding-left: 20px;">
+                                <li>General: 1 full dropper 2x daily in warm water</li>
+                                <li>Acute: 2 full droppers 6x daily in warm water (3-5 days)</li>
+                                <li>Chronic: 2 full droppers 2x daily in warm water</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 10px;"><em>Start with Lymph 1, progress based on response and chronicity</em></p>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="lymphRecommended">
+                    <label for="lymphRecommended"><strong>Include Lymph Drainage in protocol</strong></label>
+                </div>
+            </div>
+            
+            <div class="supplement-card">
+                <h4>Vitamin B Coenzyme Complex Liposome</h4>
+                <p><strong>Retail Price:</strong> $45.62 | <strong>With Tax:</strong> $48.93 per bottle (2 oz) | <strong>~$49-98/month</strong></p>
+                <p><strong>Purpose:</strong> Complete B-complex in liposomal form for superior absorption. Supports all nerve metabolic pathways.</p>
+                <div class="dosing-info">
+                    <strong>DOSING:</strong>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li><strong>General:</strong> 2 full droppers daily (hold under tongue 30 seconds)</li>
+                        <li><strong>Acute Neuropathy:</strong> 3 full droppers 3x daily</li>
+                        <li><strong>Chronic Neuropathy:</strong> 2 full droppers 2x daily</li>
+                    </ul>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="bcomplexRecommended">
+                    <label for="bcomplexRecommended"><strong>Include B-Complex in protocol</strong></label>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 7: TREATMENT MODALITIES -->
+        <div class="section">
+            <h2>🔧 Treatment Modalities</h2>
+            
+            <div class="treatment-grid">
+                <div class="treatment-card">
+                    <h4>Chiropractic Adjustments</h4>
+                    <p>Restore proper nerve flow by correcting vertebral subluxations. Essential for addressing nerve interference at spinal level.</p>
+                    <div class="price-tag">$75 per visit</div>
+                    <span id="adjustmentCoveredTag" class="covered-tag" style="display: none;">Insurance Covered</span>
+                    <div class="frequency">Recommended: 2-3x/week initially, then 1-2x/week maintenance</div>
+                    <div class="checkbox-item" style="margin-top: 10px;">
+                        <input type="checkbox" id="adjustmentsRec">
+                        <label for="adjustmentsRec">Include in treatment plan</label>
+                    </div>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label>Number of visits recommended:</label>
+                        <input type="number" id="adjustmentVisits" min="0" placeholder="# visits">
+                    </div>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Dual Laser Therapy</h4>
+                    <p><strong>Erchonia + Quantum Wave Scalar Laser Combined Treatment</strong></p>
+                    <p>FDA-cleared low-level laser therapy with advanced scalar wave technology. Promotes cellular healing, reduces inflammation, increases ATP production, stimulates nerve regeneration.</p>
+                    <div class="price-tag">$75 per session (both lasers)</div>
+                    <div class="frequency">Recommended: 2-3x/week for 4-8 weeks</div>
+                    <div class="checkbox-item" style="margin-top: 10px;">
+                        <input type="checkbox" id="laserRec">
+                        <label for="laserRec">Include in treatment plan</label>
+                    </div>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label>Number of sessions recommended:</label>
+                        <input type="number" id="laserSessions" min="0" placeholder="# sessions">
+                    </div>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Rebuilder Medical Device 2407</h4>
+                    <p>FDA-cleared electrical stimulation specifically for neuropathy. Reeducates nerves, reduces pain, improves circulation. Gold standard for neuropathy treatment.</p>
+                    <div class="price-tag">$45 per session</div>
+                    <div class="frequency">Recommended: Daily or every other day initially, then 2-3x/week maintenance</div>
+                    <div style="background: #e3f2fd; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 0.9em;">
+                        <strong>💡 Add-On Special:</strong> Only $35 when combined with adjustment or laser same day
+                    </div>
+                    <div class="checkbox-item" style="margin-top: 10px;">
+                        <input type="checkbox" id="rebuilderRec">
+                        <label for="rebuilderRec">Include in treatment plan</label>
+                    </div>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label>Number of sessions recommended:</label>
+                        <input type="number" id="rebuilderSessions" min="0" placeholder="# sessions">
+                    </div>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Dry Needling</h4>
+                    <p>Release myofascial trigger points that may compress nerves. Addresses peripheral nerve entrapment, improves local circulation, reduces referred pain patterns. <strong>Excellent for neuropathy with myofascial component.</strong></p>
+                    <div class="price-tag">$55 per session</div>
+                    <span id="dryNeedlingCoveredTag" class="covered-tag" style="display: none;">May Be Covered</span>
+                    <div class="frequency">Recommended: 1-2x/week as needed</div>
+                    <div class="checkbox-item" style="margin-top: 10px;">
+                        <input type="checkbox" id="dryNeedlingRec">
+                        <label for="dryNeedlingRec">Include in treatment plan</label>
+                    </div>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label>Number of sessions recommended:</label>
+                        <input type="number" id="dryNeedlingSessions" min="0" placeholder="# sessions">
+                    </div>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Functional Rehab</h4>
+                    <p>Proprioceptive training, balance exercises, nerve gliding techniques. Restores function and prevents progression.</p>
+                    <div class="price-tag">$80 per session</div>
+                    <div class="frequency">Recommended: 2x/week for 6-8 weeks</div>
+                    <div class="checkbox-item" style="margin-top: 10px;">
+                        <input type="checkbox" id="rehabRec">
+                        <label for="rehabRec">Include in treatment plan</label>
+                    </div>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label>Number of sessions recommended:</label>
+                        <input type="number" id="rehabSessions" min="0" placeholder="# sessions">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 8: TREATMENT PLAN RECOMMENDATIONS -->
+        <div class="section">
+            <h2>📝 Recommended Treatment Plans & Financial Options</h2>
+            
+            <div class="recommendation-box">
+                <h3>🏅 RECOMMENDED: Neuropathy Intensive Care Plan</h3>
+                <p style="font-size: 1.1em; margin: 10px 0;"><strong>12-Week Comprehensive Protocol</strong></p>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4>Phase 1: Initial Intensive (Weeks 1-4)</h4>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>3x/week: Chiropractic Adjustments ($75 each)</li>
+                        <li>3x/week: Dual Laser Therapy ($75 each)</li>
+                        <li>2x/week: Rebuilder Device sessions ($45 each)</li>
+                        <li>1x/week: Dry Needling ($55 each)</li>
+                        <li>Full supplement protocol initiation</li>
+                    </ul>
+                    <p><strong>Weekly Investment:</strong> ~$395-450/week</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4>Phase 2: Active Treatment (Weeks 5-8)</h4>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>2x/week: Chiropractic Adjustments ($75 each)</li>
+                        <li>2x/week: Dual Laser Therapy ($75 each)</li>
+                        <li>2x/week: Rebuilder Device sessions ($45 each)</li>
+                        <li>2x/week: Functional Rehab ($80 each)</li>
+                        <li>1x/week: Dry Needling ($55 each)</li>
+                        <li>Continue supplement protocol</li>
+                    </ul>
+                    <p><strong>Weekly Investment:</strong> ~$385-440/week</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4>Phase 3: Maintenance (Weeks 9-12)</h4>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>1-2x/week: Chiropractic Adjustments ($75 each)</li>
+                        <li>1x/week: Dual Laser Therapy ($75 each)</li>
+                        <li>1-2x/week: Rebuilder Device sessions ($45 each)</li>
+                        <li>1x/week: Functional Rehab ($80 each)</li>
+                        <li>Continue supplement protocol</li>
+                    </ul>
+                    <p><strong>Weekly Investment:</strong> ~$230-320/week</p>
+                </div>
+            </div>
+            
+            <div class="treatment-grid" style="margin-top: 30px;">
+                <div class="treatment-card">
+                    <h4>🥉 Essential Neuropathy Package</h4>
+                    <p style="margin: 15px 0;">Best for mild neuropathy or budget-conscious patients</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>10 Adjustments ($750 value)</li>
+                        <li>6 Dual Laser Sessions ($450 value)</li>
+                        <li>6 Rebuilder Sessions ($270 value)</li>
+                        <li>Basic Supplement Protocol</li>
+                    </ul>
+                    <div class="price-tag">Package: $1,170 + Supplements</div>
+                    <p style="margin-top: 10px; font-size: 0.9em;"><strong>Reg. $1,470 - SAVE $300</strong> with package</p>
+                    <div class="checkbox-item" style="margin-top: 15px;">
+                        <input type="checkbox" id="essentialPackage">
+                        <label for="essentialPackage">Recommend Essential Package</label>
+                    </div>
+                </div>
+                
+                <div class="treatment-card" style="border: 3px solid #4caf50;">
+                    <h4>🥈 Complete Neuropathy Care Package</h4>
+                    <p style="margin: 15px 0;"><strong>MOST POPULAR</strong> - Best value for moderate-severe neuropathy</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>20 Adjustments ($1,500 value)</li>
+                        <li>12 Dual Laser Sessions ($900 value)</li>
+                        <li>12 Rebuilder Sessions ($540 value)</li>
+                        <li>10 Dry Needling ($550 value)</li>
+                        <li>8 Rehab Sessions ($640 value)</li>
+                        <li>Comprehensive Supplement Protocol</li>
+                    </ul>
+                    <div class="price-tag">Package: $3,300 + Supplements</div>
+                    <p style="margin-top: 10px; font-size: 0.9em;"><strong>Reg. $4,130 - SAVE $830</strong> with package (20% discount)</p>
+                    <div class="checkbox-item" style="margin-top: 15px;">
+                        <input type="checkbox" id="completePackage">
+                        <label for="completePackage">Recommend Complete Package</label>
+                    </div>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>🥇 Premium Neuropathy Resolution Program</h4>
+                    <p style="margin: 15px 0;">For advanced neuropathy requiring intensive intervention</p>
+                    <ul style="padding-left: 20px; margin: 10px 0;">
+                        <li>30 Adjustments ($2,250 value)</li>
+                        <li>18 Dual Laser Sessions ($1,350 value)</li>
+                        <li>24 Rebuilder Sessions ($1,080 value)</li>
+                        <li>10 Dry Needling ($550 value)</li>
+                        <li>12 Rehab Sessions ($960 value)</li>
+                        <li>Full Supplement Protocol</li>
+                        <li>Weekly progress assessments</li>
+                    </ul>
+                    <div class="price-tag">Package: $4,950 + Supplements</div>
+                    <p style="margin-top: 10px; font-size: 0.9em;"><strong>Reg. $6,190 - SAVE $1,240</strong> with package (20% discount)</p>
+                    <div class="checkbox-item" style="margin-top: 15px;">
+                        <input type="checkbox" id="premiumPackage">
+                        <label for="premiumPackage">Recommend Premium Package</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-box" style="margin-top: 30px;">
+                <h3>Monthly Membership Alternative</h3>
+                <p><strong>Pain Relief Plan - $315/month</strong></p>
+                <ul style="padding-left: 20px; margin: 10px 0;">
+                    <li>4 Adjustments per month</li>
+                    <li>2 Dry Needling sessions</li>
+                    <li>2 Dual Laser sessions (BONUS)</li>
+                    <li>20% discount on additional services</li>
+                    <li>Supplement protocol available</li>
+                </ul>
+                <div class="checkbox-item" style="margin-top: 15px;">
+                    <input type="checkbox" id="membershipPlan">
+                    <label for="membershipPlan">Recommend Monthly Membership</label>
+                </div>
+            </div>
+
+            <!-- COST CALCULATOR -->
+            <div class="cost-summary" id="costCalculator" style="display: none;">
+                <h3 style="color: #04387C; margin-bottom: 15px;">Custom Treatment Plan Cost Estimate</h3>
+                <div id="costBreakdown"></div>
+                <div class="cost-row cost-total">
+                    <span>Estimated Total (Cash Pay):</span>
+                    <span id="totalCash">$0</span>
+                </div>
+                <div class="cost-row" id="insurancePortionRow" style="display: none; color: #2196f3;">
+                    <span>Estimated Insurance Covered Portion:</span>
+                    <span id="totalInsurance">$0</span>
+                </div>
+                <div class="cost-row cost-total" id="patientResponsibilityRow" style="display: none; color: #04387C;">
+                    <span>Estimated Patient Responsibility:</span>
+                    <span id="patientResponsibility">$0</span>
+                </div>
+                <button class="btn" onclick="calculateCosts()" style="margin-top: 15px;">Calculate Treatment Costs</button>
+            </div>
+        </div>
+
+        <!-- SECTION 9: CLINICAL NOTES & RECOMMENDATIONS -->
+        <div class="section">
+            <h2>📄 Clinical Findings & Recommendations</h2>
+            
+            <div class="form-group">
+                <label>Overall Severity Classification:</label>
+                <select id="severityClass" style="font-size: 1.1em; padding: 12px;">
+                    <option value="">Select severity</option>
+                    <option value="mild">Mild Neuropathy</option>
+                    <option value="moderate">Moderate Neuropathy</option>
+                    <option value="severe">Severe Neuropathy</option>
+                    <option value="advanced">Advanced/Longstanding Neuropathy</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label>Primary Distribution Pattern:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="distSymmetric">
+                        <label for="distSymmetric">Symmetric "Stocking-Glove" Distribution</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="distAsymmetric">
+                        <label for="distAsymmetric">Asymmetric/Focal Distribution</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="distLower">
+                        <label for="distLower">Lower Extremity Predominant</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="distUpper">
+                        <label for="distUpper">Upper Extremity Predominant</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label>Contributing Factors Identified:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="factorDiabetes">
+                        <label for="factorDiabetes">Diabetes/Pre-diabetes</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="factorSpinal">
+                        <label for="factorSpinal">Spinal Subluxation Complex</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="factorNutritional">
+                        <label for="factorNutritional">Nutritional Deficiency</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="factorToxic">
+                        <label for="factorToxic">Toxic Exposure/Metabolic</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="factorInflammation">
+                        <label for="factorInflammation">Chronic Inflammation</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label>Detailed Clinical Findings:</label>
+                <textarea id="clinicalFindings" class="notes-area" placeholder="Document specific test results, patterns observed, and clinical impressions..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Treatment Recommendations & Prognosis:</label>
+                <textarea id="treatmentNotes" class="notes-area" placeholder="Recommended treatment plan, expected timeline, home care instructions, and prognosis based on findings..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Patient Education Points Discussed:</label>
+                <textarea id="educationNotes" class="notes-area" placeholder="Document education provided regarding neuropathy progression, importance of compliance, lifestyle modifications, etc..."></textarea>
+            </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-buttons">
+            <button class="btn" onclick="generatePatientReport()">🖨️ Generate Patient Report</button>
+            <button class="btn" onclick="generatePDF()">📄 Save as PDF</button>
+            <button class="btn btn-secondary" onclick="saveData()">💾 Save Progress</button>
+            <button class="btn btn-secondary" onclick="clearForm()">🔄 Clear Form</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd; color: #666;">
+            <p><strong>Seay Wellness</strong> | 503 US-70 East, Suite L, Garner, NC 27529</p>
+            <p>Phone: (919) 662-0504 | www.seaywellness.com</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Comprehensive Chiropractic & Functional Medicine Care</p>
+        </div>
+    </div>
+
+    <script>
+        // Set default date to today
+        document.getElementById('examDate').valueAsDate = new Date();
+        
+        // Temperature differential calculations
+        function calculateHandTempDiff() {
+            const right = parseFloat(document.getElementById('rightHandTemp').value);
+            const left = parseFloat(document.getElementById('leftHandTemp').value);
+            
+            if (!isNaN(right) && !isNaN(left)) {
+                const diff = Math.abs(right - left);
+                document.getElementById('handTempDiff').value = diff.toFixed(1) + '°F';
+                
+                const statusDiv = document.getElementById('handTempStatus');
+                const statusText = document.getElementById('handTempStatusText');
+                
+                if (diff > 1.5) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#f8d7da';
+                    statusDiv.style.borderLeft = '4px solid #dc3545';
+                    statusText.textContent = `⚠️ ABNORMAL - ${diff.toFixed(1)}°F differential indicates autonomic dysfunction`;
+                    statusText.style.color = '#721c24';
+                    checkOverallTempStatus();
+                } else {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#d4edda';
+                    statusDiv.style.borderLeft = '4px solid #28a745';
+                    statusText.textContent = `✓ NORMAL - ${diff.toFixed(1)}°F differential (within normal range)`;
+                    statusText.style.color = '#155724';
+                    checkOverallTempStatus();
+                }
+            }
+        }
+        
+        function calculateFootTempDiff() {
+            const right = parseFloat(document.getElementById('rightFootTemp').value);
+            const left = parseFloat(document.getElementById('leftFootTemp').value);
+            
+            if (!isNaN(right) && !isNaN(left)) {
+                const diff = Math.abs(right - left);
+                document.getElementById('footTempDiff').value = diff.toFixed(1) + '°F';
+                
+                const statusDiv = document.getElementById('footTempStatus');
+                const statusText = document.getElementById('footTempStatusText');
+                
+                if (diff > 1.5) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#f8d7da';
+                    statusDiv.style.borderLeft = '4px solid #dc3545';
+                    statusText.textContent = `⚠️ ABNORMAL - ${diff.toFixed(1)}°F differential indicates autonomic dysfunction`;
+                    statusText.style.color = '#721c24';
+                    checkOverallTempStatus();
+                } else {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.background = '#d4edda';
+                    statusDiv.style.borderLeft = '4px solid #28a745';
+                    statusText.textContent = `✓ NORMAL - ${diff.toFixed(1)}°F differential (within normal range)`;
+                    statusText.style.color = '#155724';
+                    checkOverallTempStatus();
+                }
+            }
+        }
+        
+        function checkOverallTempStatus() {
+            const rightHand = parseFloat(document.getElementById('rightHandTemp').value);
+            const leftHand = parseFloat(document.getElementById('leftHandTemp').value);
+            const rightFoot = parseFloat(document.getElementById('rightFootTemp').value);
+            const leftFoot = parseFloat(document.getElementById('leftFootTemp').value);
+            
+            const handDiff = !isNaN(rightHand) && !isNaN(leftHand) ? Math.abs(rightHand - leftHand) : 0;
+            const footDiff = !isNaN(rightFoot) && !isNaN(leftFoot) ? Math.abs(rightFoot - leftFoot) : 0;
+            
+            const warningDiv = document.getElementById('tempWarning');
+            const warningText = document.getElementById('tempWarningText');
+            
+            if (handDiff > 1.5 || footDiff > 1.5) {
+                warningDiv.style.display = 'block';
+                let message = 'Temperature differentials exceeding 1.5°F indicate small fiber neuropathy with autonomic involvement. This suggests:\n\n';
+                if (handDiff > 1.5) {
+                    message += `• Upper extremity autonomic dysfunction (${handDiff.toFixed(1)}°F hand differential)\n`;
+                }
+                if (footDiff > 1.5) {
+                    message += `• Lower extremity autonomic dysfunction (${footDiff.toFixed(1)}°F foot differential)\n`;
+                }
+                message += '\nThis finding supports more aggressive treatment and close monitoring.';
+                warningText.textContent = message;
+                warningText.style.whiteSpace = 'pre-line';
+            } else {
+                warningDiv.style.display = 'none';
+            }
+        }
+        
+        // Add event listeners for temperature inputs
+        document.getElementById('rightHandTemp').addEventListener('input', calculateHandTempDiff);
+        document.getElementById('leftHandTemp').addEventListener('input', calculateHandTempDiff);
+        document.getElementById('rightFootTemp').addEventListener('input', calculateFootTempDiff);
+        document.getElementById('leftFootTemp').addEventListener('input', calculateFootTempDiff);
+        
+        // Toggle insurance inputs
+        function toggleInsurance() {
+            const toggle = document.getElementById('insuranceToggle');
+            const inputs = document.getElementById('insuranceInputs');
+            const adjustmentTag = document.getElementById('adjustmentCoveredTag');
+            const dryNeedlingTag = document.getElementById('dryNeedlingCoveredTag');
+            const calculator = document.getElementById('costCalculator');
+            
+            if (toggle.checked) {
+                inputs.classList.add('active');
+                adjustmentTag.style.display = 'inline-block';
+                calculator.style.display = 'block';
+            } else {
+                inputs.classList.remove('active');
+                adjustmentTag.style.display = 'none';
+                dryNeedlingTag.style.display = 'none';
+                calculator.style.display = 'none';
+            }
+        }
+        
+        // Update dry needling coverage tag
+        document.getElementById('dryNeedlingCovered').addEventListener('change', function() {
+            const tag = document.getElementById('dryNeedlingCoveredTag');
+            if (this.value === 'yes' || this.value === 'partial') {
+                tag.style.display = 'inline-block';
+            } else {
+                tag.style.display = 'none';
+            }
+        });
+        
+        function calculateCosts() {
+            const adjustmentVisits = parseInt(document.getElementById('adjustmentVisits').value) || 0;
+            const laserSessions = parseInt(document.getElementById('laserSessions').value) || 0;
+            const dryNeedlingSessions = parseInt(document.getElementById('dryNeedlingSessions').value) || 0;
+            const rehabSessions = parseInt(document.getElementById('rehabSessions').value) || 0;
+            const rebuilderSessions = parseInt(document.getElementById('rebuilderSessions').value) || 0;
+            
+            const adjustmentsCovered = parseInt(document.getElementById('adjustmentsCovered').value) || 0;
+            const dryNeedlingCoveredValue = document.getElementById('dryNeedlingCovered').value;
+            const dryNeedlingVisitsCovered = parseInt(document.getElementById('dryNeedlingVisits').value) || 0;
+            const copay = parseFloat(document.getElementById('copayAmount').value) || 0;
+            
+            let totalCash = 0;
+            let insuranceCovered = 0;
+            let breakdown = '';
+            
+            // Adjustments
+            const adjustmentCost = adjustmentVisits * 75;
+            totalCash += adjustmentCost;
+            breakdown += `<div class="cost-row"><span>Adjustments (${adjustmentVisits} visits @ $75)</span><span>$${adjustmentCost}</span></div>`;
+            
+            if (document.getElementById('insuranceToggle').checked && adjustmentsCovered > 0) {
+                const coveredAdjustments = Math.min(adjustmentVisits, adjustmentsCovered);
+                insuranceCovered += coveredAdjustments * (75 - copay);
+            }
+            
+            // Laser
+            if (laserSessions > 0) {
+                const laserCost = laserSessions * 75;
+                totalCash += laserCost;
+                breakdown += `<div class="cost-row"><span>Dual Laser Therapy (${laserSessions} sessions @ $75)</span><span>$${laserCost}</span></div>`;
+            }
+            
+            // Dry Needling
+            if (dryNeedlingSessions > 0) {
+                const dryNeedlingCost = dryNeedlingSessions * 55;
+                totalCash += dryNeedlingCost;
+                breakdown += `<div class="cost-row"><span>Dry Needling (${dryNeedlingSessions} sessions @ $55)</span><span>$${dryNeedlingCost}</span></div>`;
+                
+                if (document.getElementById('insuranceToggle').checked && dryNeedlingCoveredValue === 'yes') {
+                    const coveredDryNeedling = Math.min(dryNeedlingSessions, dryNeedlingVisitsCovered);
+                    insuranceCovered += coveredDryNeedling * (55 - copay);
+                }
+            }
+            
+            // Rehab
+            if (rehabSessions > 0) {
+                const rehabCost = rehabSessions * 80;
+                totalCash += rehabCost;
+                breakdown += `<div class="cost-row"><span>Functional Rehab (${rehabSessions} sessions @ $80)</span><span>$${rehabCost}</span></div>`;
+            }
+            
+            // Rebuilder
+            if (rebuilderSessions > 0) {
+                const rebuilderCost = rebuilderSessions * 45;
+                totalCash += rebuilderCost;
+                breakdown += `<div class="cost-row"><span>Rebuilder Device (${rebuilderSessions} sessions @ $45)</span><span>$${rebuilderCost}</span></div>`;
+            }
+            
+            document.getElementById('costBreakdown').innerHTML = breakdown;
+            document.getElementById('totalCash').textContent = '$' + totalCash;
+            
+            if (document.getElementById('insuranceToggle').checked && insuranceCovered > 0) {
+                document.getElementById('insurancePortionRow').style.display = 'flex';
+                document.getElementById('patientResponsibilityRow').style.display = 'flex';
+                document.getElementById('totalInsurance').textContent = '$' + insuranceCovered.toFixed(2);
+                document.getElementById('patientResponsibility').textContent = '$' + (totalCash - insuranceCovered).toFixed(2);
+            } else {
+                document.getElementById('insurancePortionRow').style.display = 'none';
+                document.getElementById('patientResponsibilityRow').style.display = 'none';
+            }
+        }
+        
+        // Show calculator when visits are entered
+        ['adjustmentVisits', 'laserSessions', 'dryNeedlingSessions', 'rehabSessions', 'rebuilderSessions'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function() {
+                document.getElementById('costCalculator').style.display = 'block';
+            });
+        });
+        
+        function generatePDF() {
+            generatePatientReport();
+        }
+        
+        function generatePatientReport() {
+            // Gather patient info
+            const patientName = document.getElementById('patientName').value || '[Patient Name]';
+            const examDate = document.getElementById('examDate').value || new Date().toISOString().split('T')[0];
+            
+            // Build report HTML
+            let reportHTML = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Neuropathy Report - ${patientName}</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:850px;margin:15px auto;padding:15px;line-height:1.5;color:#333}
+.header{text-align:center;border-bottom:3px solid #04387C;padding-bottom:15px;margin-bottom:20px}
+.header h1{color:#04387C;margin:0 0 8px 0;font-size:26px}
+.section{margin:15px 0;page-break-before:auto}
+.section-title{background:#04387C;color:white;padding:8px 12px;margin:12px 0 10px 0;font-size:17px;font-weight:bold}
+.subsection-title{color:#04387C;font-size:15px;font-weight:bold;margin:12px 0 8px 0;border-bottom:2px solid #e0e0e0;padding-bottom:4px}
+.finding-item{margin:8px 0;padding:8px;background:#f8f9fa;border-left:4px solid #04387C}
+.abnormal{background:#fff3cd;border-left-color:#ffc107}
+.severe{background:#f8d7da;border-left-color:#dc3545}
+.normal{background:#d4edda;border-left-color:#28a745}
+.treatment-card{background:#f8f9fa;padding:12px;margin:8px 0;border-radius:4px;border-left:4px solid #04387C}
+.treatment-card h4{margin:0 0 8px 0;color:#04387C;font-size:15px}
+.treatment-card p{margin:5px 0;font-size:14px}
+.supplement-card{background:#e3f2fd;padding:12px;margin:8px 0;border-radius:4px;border-left:4px solid #1976d2}
+.supplement-card h4{margin:0 0 8px 0;color:#1976d2;font-size:15px}
+.supplement-card p{margin:5px 0;font-size:14px}
+.cost-summary{background:#fff3cd;padding:12px;margin:12px 0;border-radius:4px;border:2px solid #ffc107}
+.cost-summary h4{margin:0 0 8px 0;font-size:16px}
+.cost-summary p{margin:5px 0}
+.footer{text-align:center;margin-top:25px;padding-top:15px;border-top:2px solid #ddd;color:#666;font-size:13px}
+ul{margin:8px 0;padding-left:20px}
+li{margin:4px 0;font-size:14px}
+@media print{body{margin:0;padding:12px}.section{page-break-inside:auto;margin:12px 0}.section-title{page-break-after:avoid}}
+</style></head><body>
+<div class="header"><h1>NEUROPATHY ASSESSMENT REPORT</h1><p><strong>Patient:</strong> ${patientName}</p>
+<p><strong>Examination Date:</strong> ${new Date(examDate).toLocaleDateString()}</p>
+<p style="margin-top:12px;font-size:13px">Seay Wellness | 503 US-70 East, Suite L, Garner, NC 27529 | (919) 662-0504</p></div>`;
+
+            // ASSESSMENT FINDINGS
+            let hasFindings = false;
+            let findingsHTML = '';
+            
+            // Temperature Assessment
+            const handDiff = document.getElementById('handTempDiff')?.value || '';
+            const footDiff = document.getElementById('footTempDiff')?.value || '';
+            if (handDiff || footDiff) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Infrared Temperature Assessment</div>';
+                
+                if (handDiff) {
+                    const handValue = parseFloat(handDiff);
+                    const handClass = handValue > 1.5 ? 'abnormal' : 'normal';
+                    const handStatus = handValue > 1.5 ? '⚠️ ABNORMAL - Indicates autonomic dysfunction' : '✓ NORMAL';
+                    findingsHTML += `<div class="finding-item ${handClass}"><strong>Hand Temperature Differential:</strong> ${handDiff} ${handStatus}</div>`;
+                }
+                
+                if (footDiff) {
+                    const footValue = parseFloat(footDiff);
+                    const footClass = footValue > 1.5 ? 'abnormal' : 'normal';
+                    const footStatus = footValue > 1.5 ? '⚠️ ABNORMAL - Indicates autonomic dysfunction' : '✓ NORMAL';
+                    findingsHTML += `<div class="finding-item ${footClass}"><strong>Foot Temperature Differential:</strong> ${footDiff} ${footStatus}</div>`;
+                }
+            }
+            
+            // Vibration Sense Testing
+            const vibTests = [
+                {id:'rightShoulder',label:'Right Shoulder'},{id:'leftShoulder',label:'Left Shoulder'},
+                {id:'rightThumb',label:'Right Thumb MCP'},{id:'leftThumb',label:'Left Thumb MCP'},
+                {id:'rightToe',label:'Right Big Toe MTP'},{id:'leftToe',label:'Left Big Toe MTP'}
+            ];
+            
+            let vibHTML = '';
+            vibTests.forEach(test => {
+                const value = document.getElementById(test.id)?.value;
+                if (value) {
+                    const numValue = parseInt(value);
+                    let status = '', itemClass = 'normal';
+                    if (numValue >= 8) status = '✓ Normal';
+                    else if (numValue >= 6) { status = 'Mild deficit'; itemClass = 'abnormal'; }
+                    else if (numValue >= 3) { status = 'Moderate deficit'; itemClass = 'abnormal'; }
+                    else { status = 'Severe deficit'; itemClass = 'severe'; }
+                    
+                    if (!vibHTML) vibHTML += '<div class="subsection-title">Vibration Sense Testing (128 Hz Tuning Fork)</div>';
+                    vibHTML += `<div class="finding-item ${itemClass}"><strong>${test.label}:</strong> ${value}/10 - ${status}</div>`;
+                    hasFindings = true;
+                }
+            });
+            findingsHTML += vibHTML;
+            
+            // Digit Span Testing
+            const digitTests = [
+                {hand:'rightHandSpan', foot:'rightFootSpan', side:'Right'},
+                {hand:'leftHandSpan', foot:'leftFootSpan', side:'Left'}
+            ];
+            
+            let digitHTML = '';
+            let hasDigitTests = false;
+            
+            digitTests.forEach(test => {
+                // Light Touch Span
+                const handSpan = document.getElementById(test.hand)?.value;
+                const footSpan = document.getElementById(test.foot)?.value;
+                
+                // Sustained Hold
+                const handHold = document.getElementById(test.hand.replace('Span','Hold'))?.value;
+                const footHold = document.getElementById(test.foot.replace('Span','Hold'))?.value;
+                
+                // Digit Numbering
+                const handNumber = document.getElementById(test.hand.replace('Span','Number'))?.value;
+                const footNumber = document.getElementById(test.foot.replace('Span','Number'))?.value;
+                
+                if (handSpan || footSpan || handHold || footHold || handNumber || footNumber) {
+                    if (!hasDigitTests) {
+                        digitHTML += '<div class="subsection-title">Digit Span Testing (Eyes Closed)</div>';
+                        hasDigitTests = true;
+                    }
+                    
+                    // Check severity for HAND - all three tests failed = severe
+                    let handSeverity = 'normal';
+                    if (handSpan && handHold && handNumber) {
+                        const spanFailed = (handSpan === 'incorrect' || handSpan === 'unable');
+                        const holdFailed = (handHold === 'incorrect' || handHold === 'unable');
+                        const numberFailed = (handNumber === '0/5' || handNumber === '1/5' || handNumber === '2/5');
+                        if (spanFailed && holdFailed && numberFailed) {
+                            handSeverity = 'severe';
+                        }
+                    }
+                    
+                    // Check severity for FOOT - all three tests failed = severe
+                    let footSeverity = 'normal';
+                    if (footSpan && footHold && footNumber) {
+                        const spanFailed = (footSpan === 'incorrect' || footSpan === 'unable');
+                        const holdFailed = (footHold === 'incorrect' || footHold === 'unable');
+                        const numberFailed = (footNumber === '0/5' || footNumber === '1/5' || footNumber === '2/5');
+                        if (spanFailed && holdFailed && numberFailed) {
+                            footSeverity = 'severe';
+                        }
+                    }
+                    
+                    // Use most severe classification for the finding card
+                    const overallSeverity = (handSeverity === 'severe' || footSeverity === 'severe') ? 'severe' : 'normal';
+                    
+                    digitHTML += `<div class="finding-item ${overallSeverity}"><strong>${test.side} Side:</strong>`;
+                    if (overallSeverity === 'severe') {
+                        digitHTML += ` 🔴 <strong>SEVERE - All tests failed</strong>`;
+                    }
+                    digitHTML += '<br>';
+                    
+                    if (handSpan || handHold || handNumber) {
+                        digitHTML += `<strong>Hand:</strong> `;
+                        const handResults = [];
+                        if (handSpan) handResults.push(`Light Touch Span: ${handSpan}`);
+                        if (handHold) handResults.push(`Sustained Hold: ${handHold}`);
+                        if (handNumber) handResults.push(`Digit ID: ${handNumber}`);
+                        digitHTML += handResults.join(', ');
+                        if (handSeverity === 'severe') digitHTML += ' 🔴';
+                        digitHTML += '<br>';
+                    }
+                    
+                    if (footSpan || footHold || footNumber) {
+                        digitHTML += `<strong>Foot:</strong> `;
+                        const footResults = [];
+                        if (footSpan) footResults.push(`Light Touch Span: ${footSpan}`);
+                        if (footHold) footResults.push(`Sustained Hold: ${footHold}`);
+                        if (footNumber) footResults.push(`Toe ID: ${footNumber}`);
+                        digitHTML += footResults.join(', ');
+                        if (footSeverity === 'severe') digitHTML += ' 🔴';
+                    }
+                    
+                    digitHTML += '</div>';
+                }
+            });
+            
+            if (hasDigitTests) {
+                findingsHTML += digitHTML;
+                hasFindings = true;
+            }
+            
+            // Two-Point Discrimination
+            const rightFingertip = document.getElementById('rightFingertip2pt')?.value;
+            const leftFingertip = document.getElementById('leftFingertip2pt')?.value;
+            const fingertipStatus = document.getElementById('fingertip2ptStatus')?.value;
+            const rightToe2pt = document.getElementById('rightToe2pt')?.value;
+            const leftToe2pt = document.getElementById('leftToe2pt')?.value;
+            const toeStatus = document.getElementById('toe2ptStatus')?.value;
+            
+            if (rightFingertip || leftFingertip || rightToe2pt || leftToe2pt) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Two-Point Discrimination</div>';
+                
+                if (rightFingertip || leftFingertip) {
+                    const statusClass = fingertipStatus === 'severe' ? 'severe' : (fingertipStatus === 'impaired' ? 'abnormal' : 'normal');
+                    const statusText = fingertipStatus === 'severe' ? '🔴 Severe Deficit' : (fingertipStatus === 'impaired' ? '⚠️ Impaired' : '✓ Normal');
+                    findingsHTML += `<div class="finding-item ${statusClass}"><strong>Fingertips:</strong> Right: ${rightFingertip || 'N/A'}mm, Left: ${leftFingertip || 'N/A'}mm - ${statusText}<br><em>Normal: 2-3mm</em></div>`;
+                }
+                
+                if (rightToe2pt || leftToe2pt) {
+                    const statusClass = toeStatus === 'severe' ? 'severe' : (toeStatus === 'impaired' ? 'abnormal' : 'normal');
+                    const statusText = toeStatus === 'severe' ? '🔴 Severe Deficit' : (toeStatus === 'impaired' ? '⚠️ Impaired' : '✓ Normal');
+                    findingsHTML += `<div class="finding-item ${statusClass}"><strong>Toes:</strong> Right: ${rightToe2pt || 'N/A'}mm, Left: ${leftToe2pt || 'N/A'}mm - ${statusText}<br><em>Normal: 3-8mm</em></div>`;
+                }
+            }
+            
+            // Ankle Reflex Testing
+            const rightAnkleReflex = document.getElementById('rightAnkleReflex')?.value;
+            const leftAnkleReflex = document.getElementById('leftAnkleReflex')?.value;
+            
+            if (rightAnkleReflex || leftAnkleReflex) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Ankle Reflex Testing (Achilles)</div>';
+                
+                if (rightAnkleReflex) {
+                    const statusClass = (rightAnkleReflex === '0' || rightAnkleReflex === '1+') ? 'abnormal' : 'normal';
+                    const statusIndicator = rightAnkleReflex === '2+' ? '✓' : '⚠️';
+                    findingsHTML += `<div class="finding-item ${statusClass}">${statusIndicator} <strong>Right Ankle:</strong> ${rightAnkleReflex}</div>`;
+                }
+                
+                if (leftAnkleReflex) {
+                    const statusClass = (leftAnkleReflex === '0' || leftAnkleReflex === '1+') ? 'abnormal' : 'normal';
+                    const statusIndicator = leftAnkleReflex === '2+' ? '✓' : '⚠️';
+                    findingsHTML += `<div class="finding-item ${statusClass}">${statusIndicator} <strong>Left Ankle:</strong> ${leftAnkleReflex}</div>`;
+                }
+            }
+            
+            // Balance & Proprioception
+            const rombergOpen = document.getElementById('rombergOpen')?.value;
+            const rombergClosed = document.getElementById('rombergClosed')?.value;
+            const rombergDuration = document.getElementById('rombergDuration')?.value;
+            const rightLegStance = document.getElementById('rightLegStance')?.value;
+            const leftLegStance = document.getElementById('leftLegStance')?.value;
+            const stanceStatus = document.getElementById('stanceStatus')?.value;
+            
+            if (rombergOpen || rombergClosed || rightLegStance || leftLegStance) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Balance & Proprioception</div>';
+                
+                if (rombergOpen || rombergClosed) {
+                    const isAbnormal = rombergClosed === 'unstable' || rombergClosed === 'falling';
+                    const statusClass = isAbnormal ? 'abnormal' : 'normal';
+                    const statusIndicator = isAbnormal ? '⚠️' : '✓';
+                    findingsHTML += `<div class="finding-item ${statusClass}">${statusIndicator} <strong>Romberg Test:</strong> Eyes Open: ${rombergOpen || 'N/A'}, Eyes Closed: ${rombergClosed || 'N/A'}`;
+                    if (rombergDuration) findingsHTML += ` (${rombergDuration} seconds)`;
+                    findingsHTML += '</div>';
+                }
+                
+                if (rightLegStance || leftLegStance) {
+                    const statusClass = stanceStatus === 'impaired' ? 'abnormal' : (stanceStatus === 'reduced' ? 'abnormal' : 'normal');
+                    const statusText = stanceStatus === 'impaired' ? '⚠️ Impaired (<5s)' : (stanceStatus === 'reduced' ? '⚠️ Reduced (5-10s)' : '✓ Normal (>10s)');
+                    findingsHTML += `<div class="finding-item ${statusClass}"><strong>Single Leg Stance:</strong> Right: ${rightLegStance || 'N/A'}s, Left: ${leftLegStance || 'N/A'}s - ${statusText}</div>`;
+                }
+            }
+            
+            // Skin & Autonomic Signs
+            const skinSigns = [];
+            if (document.getElementById('skinDry')?.checked) skinSigns.push('Dry, flaking skin');
+            if (document.getElementById('skinShiny')?.checked) skinSigns.push('Shiny, atrophic skin');
+            if (document.getElementById('hairLoss')?.checked) skinSigns.push('Hair loss on extremities');
+            if (document.getElementById('colorChanges')?.checked) skinSigns.push('Color changes (pallor/rubor)');
+            if (document.getElementById('edema')?.checked) skinSigns.push('Edema present');
+            if (document.getElementById('calluses')?.checked) skinSigns.push('Abnormal callus formation');
+            
+            if (skinSigns.length > 0) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Skin & Autonomic Signs</div>';
+                findingsHTML += '<div class="finding-item abnormal">';
+                skinSigns.forEach(sign => findingsHTML += `<strong>•</strong> ${sign}<br>`);
+                findingsHTML += '</div>';
+            }
+            
+            // Severity Classification
+            const severity = document.querySelector('input[name="severity"]:checked');
+            if (severity) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Neuropathy Severity Classification</div>';
+                findingsHTML += `<div class="finding-item"><strong>Classification:</strong> ${severity.value.toUpperCase()}</div>`;
+            }
+            
+            // Distribution Pattern
+            const distributions = [];
+            if (document.getElementById('distStocking')?.checked) distributions.push('Symmetric "Stocking-Glove" Distribution');
+            if (document.getElementById('distAsymmetric')?.checked) distributions.push('Asymmetric/Focal Distribution');
+            if (document.getElementById('distLower')?.checked) distributions.push('Lower Extremity Predominant');
+            if (document.getElementById('distUpper')?.checked) distributions.push('Upper Extremity Predominant');
+            
+            if (distributions.length > 0) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Distribution Pattern</div>';
+                distributions.forEach(dist => findingsHTML += `<div class="finding-item"><strong>•</strong> ${dist}</div>`);
+            }
+            
+            // Contributing Factors
+            const factors = [];
+            if (document.getElementById('factorDiabetes')?.checked) factors.push('Diabetes/Pre-diabetes');
+            if (document.getElementById('factorSpinal')?.checked) factors.push('Spinal Subluxation Complex');
+            if (document.getElementById('factorNutritional')?.checked) factors.push('Nutritional Deficiency');
+            if (document.getElementById('factorToxic')?.checked) factors.push('Toxic Exposure/Metabolic');
+            if (document.getElementById('factorInflammation')?.checked) factors.push('Chronic Inflammation');
+            
+            if (factors.length > 0) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Contributing Factors Identified</div>';
+                factors.forEach(factor => findingsHTML += `<div class="finding-item"><strong>•</strong> ${factor}</div>`);
+            }
+            
+            // Clinical Findings Notes
+            const clinicalNotes = document.getElementById('clinicalFindings')?.value || '';
+            if (clinicalNotes) {
+                hasFindings = true;
+                findingsHTML += '<div class="subsection-title">Detailed Clinical Findings</div>';
+                findingsHTML += `<div class="finding-item">${clinicalNotes.replace(/\n/g, '<br>')}</div>`;
+            }
+            
+            if (hasFindings) {
+                reportHTML += `<div class="section"><div class="section-title">ASSESSMENT FINDINGS</div>${findingsHTML}</div>`;
+            }
+            
+            // TREATMENT RECOMMENDATIONS
+            let hasTreatments = false;
+            let treatmentHTML = '';
+            
+            const adjustmentVisits = parseInt(document.getElementById('adjustmentVisits').value) || 0;
+            const laserSessions = parseInt(document.getElementById('laserSessions').value) || 0;
+            const rebuilderSessions = parseInt(document.getElementById('rebuilderSessions').value) || 0;
+            const dryNeedlingSessions = parseInt(document.getElementById('dryNeedlingSessions').value) || 0;
+            const rehabSessions = parseInt(document.getElementById('rehabSessions').value) || 0;
+            
+            if (adjustmentVisits > 0 || laserSessions > 0 || rebuilderSessions > 0 || dryNeedlingSessions > 0 || rehabSessions > 0) {
+                hasTreatments = true;
+                treatmentHTML += '<div class="subsection-title">Recommended Treatment Services</div>';
+                
+                if (adjustmentVisits > 0) {
+                    treatmentHTML += `<div class="treatment-card"><h4>Chiropractic Adjustments</h4>
+                    <p><strong>Recommended:</strong> ${adjustmentVisits} visits | <strong>Cost:</strong> $75/visit | <strong>Total:</strong> $${adjustmentVisits*75}</p>
+                    <p>Spinal correction, nerve interference reduction, improved nerve flow</p></div>`;
+                }
+                
+                if (laserSessions > 0) {
+                    treatmentHTML += `<div class="treatment-card"><h4>Dual Laser Therapy (Erchonia + Quantum Wave)</h4>
+                    <p><strong>Recommended:</strong> ${laserSessions} sessions | <strong>Cost:</strong> $75/session | <strong>Total:</strong> $${laserSessions*75}</p>
+                    <p>FDA-cleared photobiomodulation, nerve regeneration, inflammation reduction</p></div>`;
+                }
+                
+                if (rebuilderSessions > 0) {
+                    treatmentHTML += `<div class="treatment-card"><h4>Rebuilder Medical Device 2407</h4>
+                    <p><strong>Recommended:</strong> ${rebuilderSessions} sessions | <strong>Cost:</strong> $45/session | <strong>Total:</strong> $${rebuilderSessions*45}</p>
+                    <p><strong>Add-On Special:</strong> Only $35 when combined with adjustment or laser same day</p>
+                    <p>FDA-cleared electrical stimulation for neuropathy, nerve reeducation</p></div>`;
+                }
+                
+                if (dryNeedlingSessions > 0) {
+                    treatmentHTML += `<div class="treatment-card"><h4>Dry Needling</h4>
+                    <p><strong>Recommended:</strong> ${dryNeedlingSessions} sessions | <strong>Cost:</strong> $55/session | <strong>Total:</strong> $${dryNeedlingSessions*55}</p>
+                    <p>Myofascial release, nerve entrapment relief, circulation improvement</p></div>`;
+                }
+                
+                if (rehabSessions > 0) {
+                    treatmentHTML += `<div class="treatment-card"><h4>Functional Rehabilitation</h4>
+                    <p><strong>Recommended:</strong> ${rehabSessions} sessions | <strong>Cost:</strong> $80/session | <strong>Total:</strong> $${rehabSessions*80}</p>
+                    <p>Proprioceptive training, balance improvement, nerve gliding exercises</p></div>`;
+                }
+                
+                let totalTreatmentCost = (adjustmentVisits*75) + (laserSessions*75) + (rebuilderSessions*45) + (dryNeedlingSessions*55) + (rehabSessions*80);
+                treatmentHTML += `<div class="cost-summary"><h4 style="margin:0 0 10px 0">Total Treatment Investment</h4>
+                <p style="font-size:20px;margin:0"><strong>$${totalTreatmentCost}</strong></p></div>`;
+            }
+            
+            // Package recommendations
+            if (document.getElementById('essentialPackage')?.checked) {
+                hasTreatments = true;
+                treatmentHTML += `<div class="treatment-card" style="border-left-color:#28a745"><h4>✅ RECOMMENDED: Essential Package</h4>
+                <p><strong>Price:</strong> $1,170 + Supplements (Save $300)</p>
+                <ul><li>10 Adjustments</li><li>6 Dual Laser Sessions</li><li>6 Rebuilder Sessions</li><li>Basic Supplement Protocol</li></ul></div>`;
+            }
+            
+            if (document.getElementById('completePackage')?.checked) {
+                hasTreatments = true;
+                treatmentHTML += `<div class="treatment-card" style="border:3px solid #28a745"><h4>⭐ RECOMMENDED: Complete Care Package - MOST POPULAR</h4>
+                <p><strong>Price:</strong> $3,300 + Supplements (Save $830)</p>
+                <ul><li>20 Adjustments</li><li>12 Dual Laser Sessions</li><li>12 Rebuilder Sessions</li><li>10 Dry Needling</li><li>8 Functional Rehab</li><li>Comprehensive Supplements</li></ul></div>`;
+            }
+            
+            if (document.getElementById('premiumPackage')?.checked) {
+                hasTreatments = true;
+                treatmentHTML += `<div class="treatment-card" style="border-left-color:#ffc107"><h4>🥇 RECOMMENDED: Premium Resolution Program</h4>
+                <p><strong>Price:</strong> $4,950 + Supplements (Save $1,240)</p>
+                <ul><li>30 Adjustments</li><li>18 Dual Laser</li><li>24 Rebuilder</li><li>10 Dry Needling</li><li>12 Rehab</li><li>Full Supplements</li><li>Weekly Assessments</li></ul></div>`;
+            }
+            
+            if (document.getElementById('membershipPlan')?.checked) {
+                hasTreatments = true;
+                treatmentHTML += `<div class="treatment-card" style="border-left-color:#1976d2"><h4>RECOMMENDED: Pain Relief Plan - Monthly Membership</h4>
+                <p><strong>Monthly:</strong> $315/month</p>
+                <ul><li>4 Adjustments</li><li>2 Dry Needling</li><li>2 Laser (BONUS)</li><li>20% off additional services</li></ul></div>`;
+            }
+            
+            if (hasTreatments) {
+                reportHTML += `<div class="section"><div class="section-title">RECOMMENDED TREATMENT PLAN</div>${treatmentHTML}</div>`;
+            }
+            
+            // SUPPLEMENT PROTOCOL
+            let hasSupplements = false;
+            let supplementHTML = '';
+            let supplementCost = 0;
+            
+            if (document.getElementById('gb40Recommended')?.checked) {
+                hasSupplements = true;
+                supplementHTML += `<div class="supplement-card"><h4>GB-40 Yuan Source - PRIMARY</h4>
+                <p><strong>Price:</strong> $44.27/bottle (60 caps) | <strong>Monthly:</strong> $88-177</p>
+                <p>Pancreatic enzyme support, blood sugar regulation, nerve metabolism</p>
+                <p><em>Take 30 min before meals or 1hr after eating</em></p></div>`;
+                supplementCost += 88;
+            }
+            
+            if (document.getElementById('b12Recommended')?.checked) {
+                hasSupplements = true;
+                supplementHTML += `<div class="supplement-card"><h4>Methyl-B12 Liposome Spray</h4>
+                <p><strong>Price:</strong> $52.92/bottle (2oz) | <strong>Monthly:</strong> ~$53</p>
+                <p>Essential for nerve regeneration and myelin sheath repair</p></div>`;
+                supplementCost += 53;
+            }
+            
+            if (document.getElementById('alcarRecommended')?.checked) {
+                hasSupplements = true;
+                supplementHTML += `<div class="supplement-card"><h4>Acetyl L-Carnitine</h4>
+                <p><strong>Price:</strong> $45.30/bottle (90 caps) | <strong>Monthly:</strong> $68-136</p>
+                <p>Mitochondrial function, nerve pain reduction, cognitive support</p></div>`;
+                supplementCost += 91;
+            }
+            
+            if (document.getElementById('nacRecommended')?.checked) {
+                hasSupplements = true;
+                supplementHTML += `<div class="supplement-card"><h4>NAC Forte</h4>
+                <p><strong>Price:</strong> $44.85/bottle (90 caps) | <strong>Monthly:</strong> $67-90</p>
+                <p>Antioxidant, glutathione production, oxidative stress reduction</p></div>`;
+                supplementCost += 78;
+            }
+            
+            if (document.getElementById('glycineRecommended')?.checked) {
+                hasSupplements = true;
+                supplementHTML += `<div class="supplement-card"><h4>Glycine Composite</h4>
+                <p><strong>Price:</strong> $45.30/container | <strong>Monthly:</strong> $45-90</p>
+                <p>Neurotransmitter support, nerve protection, collagen formation</p></div>`;
+                supplementCost += 45;
+            }
+            
+            if (document.getElementById('magRecommended')?.checked) {
+                hasSupplements = true;
+                supplementHTML += `<div class="supplement-card"><h4>Magnesium BisGlycinate + L-Taurine</h4>
+                <p><strong>Price:</strong> $48.50/bottle (90 caps) | <strong>Monthly:</strong> ~$49</p>
+                <p>Nerve conduction support, muscle relaxation, reduces nerve excitability</p></div>`;
+                supplementCost += 49;
+            }
+            
+            if (document.getElementById('lymphRecommended')?.checked) {
+                hasSupplements = true;
+                supplementHTML += `<div class="supplement-card"><h4>Lymph Drainage Series</h4>
+                <p><strong>Price:</strong> $36.47/bottle (2oz) | <strong>Monthly:</strong> $36-73</p>
+                <p>ECM drainage to clear toxic metabolites affecting nerve function</p>
+                <p><em><strong>IMPORTANT:</strong> MUST be taken in warm water</em></p></div>`;
+                supplementCost += 36;
+            }
+            
+            if (document.getElementById('bcomplexRecommended')?.checked) {
+                hasSupplements = true;
+                supplementHTML += `<div class="supplement-card"><h4>Vitamin B Coenzyme Complex Liposome</h4>
+                <p><strong>Price:</strong> $48.93/bottle (2oz) | <strong>Monthly:</strong> $49-98</p>
+                <p>Complete B-complex in liposomal form, supports all nerve metabolic pathways</p></div>`;
+                supplementCost += 49;
+            }
+            
+            if (hasSupplements) {
+                reportHTML += `<div class="section"><div class="section-title">RECOMMENDED SUPPLEMENT PROTOCOL</div>
+                <p style="margin-bottom:20px">Physica Energetics pharmaceutical-grade supplements (all prices include 7.25% NC tax):</p>
+                ${supplementHTML}<div class="cost-summary"><h4 style="margin:0 0 10px 0">Estimated Monthly Supplement Investment</h4>
+                <p style="font-size:20px;margin:0"><strong>~$${supplementCost}/month</strong></p>
+                <p style="margin:10px 0 0 0;font-size:14px">Practitioner-only formulations for therapeutic nerve regeneration</p></div></div>`;
+            }
+            
+            // TREATMENT NOTES
+            const treatmentNotes = document.getElementById('treatmentNotes')?.value || '';
+            if (treatmentNotes) {
+                reportHTML += `<div class="section"><div class="section-title">PROGNOSIS & TREATMENT PLAN DETAILS</div>
+                <div class="finding-item">${treatmentNotes.replace(/\n/g, '<br>')}</div></div>`;
+            }
+            
+            // PATIENT EDUCATION
+            const educationNotes = document.getElementById('educationNotes')?.value || '';
+            if (educationNotes) {
+                reportHTML += `<div class="section"><div class="section-title">PATIENT EDUCATION & HOME CARE</div>
+                <div class="finding-item">${educationNotes.replace(/\n/g, '<br>')}</div></div>`;
+            }
+            
+            // Footer
+            reportHTML += `<div class="footer"><p><strong>Seay Wellness</strong></p>
+            <p>503 US-70 East, Suite L, Garner, NC 27529</p>
+            <p>Phone: (919) 662-0504 | www.seaywellness.com</p>
+            <p style="margin-top:15px;font-style:italic">Comprehensive Chiropractic & Functional Medicine Care</p>
+            <p style="margin-top:10px;font-size:12px">This report is based on the clinical examination performed on ${new Date(examDate).toLocaleDateString()}. 
+            Treatment recommendations are subject to ongoing clinical evaluation.</p></div></body></html>`;
+            
+            // Open in new window for printing
+            const reportWindow = window.open('', '_blank');
+            reportWindow.document.write(reportHTML);
+            reportWindow.document.close();
+            reportWindow.onload = function() { reportWindow.print(); };
+        }
+        
+        function saveData() {
+            alert('Save functionality would integrate with your EMR/practice management system. For now, data is stored locally in your browser.');
+            
+            const formData = {
+                patientName: document.getElementById('patientName').value,
+                examDate: document.getElementById('examDate').value,
+            };
+            localStorage.setItem('neuropathyAssessment', JSON.stringify(formData));
+        }
+        
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all form data? This cannot be undone.')) {
+                document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], textarea, select').forEach(element => {
+                    if (element.type === 'number' || element.type === 'text' || element.type === 'date') {
+                        element.value = '';
+                    } else if (element.tagName === 'SELECT') {
+                        element.selectedIndex = 0;
+                    } else if (element.tagName === 'TEXTAREA') {
+                        element.value = '';
+                    }
+                });
+                
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                document.getElementById('examDate').valueAsDate = new Date();
+                document.getElementById('insuranceInputs').classList.remove('active');
+                document.getElementById('costCalculator').style.display = 'none';
+            }
+        }
+        
+        // Auto-save functionality
+        let autoSaveInterval;
+        function startAutoSave() {
+            autoSaveInterval = setInterval(() => {
+                const formData = {};
+                document.querySelectorAll('input, select, textarea').forEach(element => {
+                    if (element.id) {
+                        if (element.type === 'checkbox') {
+                            formData[element.id] = element.checked;
+                        } else {
+                            formData[element.id] = element.value;
+                        }
+                    }
+                });
+                sessionStorage.setItem('neuropathyAssessmentDraft', JSON.stringify(formData));
+            }, 30000);
+        }
+        
+        window.addEventListener('load', () => {
+            const draft = sessionStorage.getItem('neuropathyAssessmentDraft');
+            if (draft) {
+                const shouldLoad = confirm('A draft assessment was found. Would you like to load it?');
+                if (shouldLoad) {
+                    const formData = JSON.parse(draft);
+                    Object.keys(formData).forEach(key => {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            if (element.type === 'checkbox') {
+                                element.checked = formData[key];
+                            } else {
+                                element.value = formData[key];
+                            }
+                        }
+                    });
+                }
+            }
+            startAutoSave();
+        });
+    </script>
+</body>
+</html>
